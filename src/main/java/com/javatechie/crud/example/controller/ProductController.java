@@ -6,6 +6,8 @@ import com.javatechie.crud.example.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,9 +22,10 @@ public class ProductController {
     private ProductService service;
 
     @PostMapping("/products")
-    public Product addProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
         log.info("Adding product");
-        return service.saveProduct(product);
+        ResponseEntity<Product> responseEntity = new ResponseEntity<>(service.saveProduct(product), HttpStatus.CREATED);
+        return responseEntity;
     }
 
     @PostMapping("/addProducts")
